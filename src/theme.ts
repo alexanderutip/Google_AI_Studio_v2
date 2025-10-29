@@ -1,16 +1,15 @@
-import { createTheme, PaletteColor, PaletteColorOptions } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
-// FIX: The original module augmentation was failing due to type resolution issues.
-// Using explicit types `PaletteColor` and `PaletteColorOptions` instead of
-// indexed access types (`Palette['primary']`) makes the augmentation more robust and resolves the errors.
+// FIX: Module augmentation was failing. This can happen when importing types from the module being augmented.
+// Using indexed access types (`Palette['primary']`) is safer and resolves the issue.
 declare module '@mui/material/styles' {
   interface Palette {
-    greenTrade: PaletteColor;
-    redTrade: PaletteColor;
+    greenTrade: Palette['primary'];
+    redTrade: Palette['primary'];
   }
   interface PaletteOptions {
-    greenTrade?: PaletteColorOptions;
-    redTrade?: PaletteColorOptions;
+    greenTrade?: PaletteOptions['primary'];
+    redTrade?: PaletteOptions['primary'];
   }
 }
 
